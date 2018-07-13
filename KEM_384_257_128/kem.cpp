@@ -87,49 +87,6 @@ void pgm_pointwise_add_mul_packed(const Poly* a, const Poly* b, Packed_poly* res
       pack_coef(res, i, v);
     }
 }
-/*
-void CCA_encaps(Packed_poly* ct, unsigned char* k){
-    int i;
-    unsigned char pk_m[2*LAMBDA];
-    unsigned char k_hat_r[2*LAMBDA];
-    
-    for(i= 0; i < LAMBDA; ++i) pk_m[i] = pgm_read_word(T[0].c + i)&0xFF;
-    for(i=LAMBDA; i < 2*LAMBDA; ++i) pk_m[i] = random()&0xFF;   
-
-    H(k_hat_r, 2*LAMBDA, pk_m, 2*LAMBDA); //K,r = G(pk,m)
-    encaps(ct,ct+K, pk_m+LAMBDA, k_hat_r+LAMBDA);
-    
-    for(i=LAMBDA; i < 2*LAMBDA; ++i) k_hat_r[i] = ct->bytes[i];
-    
-    H(k, LAMBDA, k_hat_r,2*LAMBDA);
-}
-
-void CCA_decaps(Packed_poly* ct, unsigned char* k){
-    unsigned char pk_m[2*LAMBDA];
-    unsigned char k_hat_r[2*LAMBDA];
-    unsigned char h1[LAMBDA];
-    unsigned char h2[LAMBDA];
-    int i, correct=1;
-    
-    for(i=0; i < LAMBDA; ++i) pk_m[i] = pgm_read_word(T[0].c + i)&0xFF;
-    
-    decaps(ct,ct+K, pk_m+LAMBDA);
-    H(k_hat_r, 2*LAMBDA, pk_m, 2*LAMBDA); //K,r = G(pk,m)
-    H(h1, LAMBDA, ct->bytes,(K+1)*PACK_SIZE);  
-
-    encaps(ct, ct+K, pk_m+LAMBDA, k_hat_r+LAMBDA);
-    H(h2, LAMBDA, ct->bytes, (K+1)*PACK_SIZE); 
-
-    for(i=0; i < LAMBDA; ++i) correct = correct & (h1[i] == h2[i]);
-     
-    correct = -correct; // 0x000000 or 0xFFFFFFFF
-    
-    for(i=0; i < LAMBDA; ++i)         k_hat_r[i] = (k_hat_r[i]&correct) | (pgm_read_word(z+i)&(~correct));
-    for(i=LAMBDA; i < 2*LAMBDA; ++i)  k_hat_r[i] = ct->bytes[i];
-    
-    H(k, LAMBDA, k_hat_r,2*LAMBDA);
-    
-}*/
 
 
 void CCA_encaps(CCA_ciphertext* ct, unsigned char* k){
